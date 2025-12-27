@@ -94,3 +94,27 @@ Set `CMAKE_HIP_ARCHITECTURES` based on your GPU:
 
 - Original: [OpenNMT/CTranslate2](https://github.com/OpenNMT/CTranslate2)
 - ROCm fork: [sssshhhhhh/CTranslate2](https://github.com/sssshhhhhh/CTranslate2)
+
+## Known Issues
+
+### Memory Access Fault on Long Audio
+
+When transcribing longer audio files (>60s), you may encounter:
+
+```
+Memory access fault by GPU node-1 (Agent handle: 0x...) on address 0x...
+Reason: Page not present or supervisor privilege.
+```
+
+**Status**: Under investigation. Short clips (~60s) work fine at 28x realtime.
+
+**Workaround**: Process audio in chunks, or use CPU mode for long files.
+
+**Search terms for updates**:
+- `"Memory access fault by GPU node" "Page not present or supervisor privilege" ROCm 7.1 PyTorch site:github.com`
+- `"Memory access fault" ROCm CTranslate2 faster-whisper gfx1101`
+
+This may be related to:
+- ROCm 7.1.1 + PyTorch nightly (2.11.0+rocm7.0) incompatibility
+- GPU memory fragmentation with longer sequences
+- HIP/ROCm memory management issues with certain operations
