@@ -118,3 +118,5 @@ This may be related to:
 - ROCm 7.1.1 + PyTorch nightly (2.11.0+rocm7.0) incompatibility
 - GPU memory fragmentation with longer sequences
 - HIP/ROCm memory management issues with certain operations
+
+**Related issue**: https://github.com/ROCm/ROCm/issues/5616 (gfx1103, same error pattern)
